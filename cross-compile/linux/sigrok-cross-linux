@@ -44,7 +44,7 @@ fi
 # V="V=1 VERBOSE=1"
 
 # Edit this to enable/disable/modify parallel compiles.
-PARALLEL="-j 2"
+PARALLEL="-j 4"
 
 # Uncomment the following lines to build with clang and run scan-build.
 # export CC=clang
@@ -61,7 +61,16 @@ C="$C --prefix=$PREFIX"
 # Remove build directory contents (if any) and create a new build dir.
 rm -rf $BUILDDIR
 mkdir $BUILDDIR
+
+# Remove everything except libsigrok because the new driver is contained there
+# rm -rf $BUILDDIR/libserialport
+# rm -rf $BUILDDIR/libsigrokdecode
+# rm -rf $BUILDDIR/sigrok-firmware
+# rm -rf $BUILDDIR/sigrok-firmware-fx2lafw
+# rm -rf $BUILDDIR/sigrok-cli
+# rm -rf $BUILDDIR/pulseview
 cd $BUILDDIR
+
 
 GIT_CLONE="git clone --depth=1"
 
@@ -81,8 +90,8 @@ make install $V
 cd ../..
 
 # libsigrok
+$GIT_CLONE https://github.com/LogicAnalyzer/libsigrok.git
 mkdir -p $PYPATH
-$GIT_CLONE $REPO_BASE/libsigrok
 cd libsigrok
 ./autogen.sh
 mkdir build
