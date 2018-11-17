@@ -44,7 +44,8 @@ fi
 # V="V=1 VERBOSE=1"
 
 # Edit this to enable/disable/modify parallel compiles.
-PARALLEL="-j 8"
+
+PARALLEL="-j 4"
 
 # Uncomment the following lines to build with clang and run scan-build.
 # export CC=clang
@@ -65,6 +66,7 @@ if [ ! -d $BUILDDIR ]; then
 fi
 
 cd $BUILDDIR
+
 
 GIT_CLONE="git clone --depth=1"
 
